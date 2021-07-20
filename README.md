@@ -32,6 +32,9 @@
 - **中国大陆 IPv4 地址列表 cncidr.txt**：
   - [https://raw.githubusercontent.com/maskedeken/clash-rules/release/cncidr.txt](https://raw.githubusercontent.com/maskedeken/clash-rules/release/cncidr.txt)
   - [https://cdn.jsdelivr.net/gh/maskedeken/clash-rules@release/cncidr.txt](https://cdn.jsdelivr.net/gh/maskedeken/clash-rules@release/cncidr.txt)
+- **局域网 IP 及保留 IP 地址列表 lancidr.txt**：
+  - [https://raw.githubusercontent.com/maskedeken/clash-rules/release/lancidr.txt](https://raw.githubusercontent.com/maskedeken/clash-rules/release/lancidr.txt)
+  - [https://cdn.jsdelivr.net/gh/maskedeken/clash-rules@release/lancidr.txt](https://cdn.jsdelivr.net/gh/maskedeken/clash-rules@release/lancidr.txt)
 
 ### 使用方式
 
