@@ -19,7 +19,8 @@ jobs:
           echo "reject_list=https://raw.githubusercontent.com/maskedeken/domain-list-custom/release/category-ads-all.txt" >> $GITHUB_ENV
           echo "proxy_list=https://raw.githubusercontent.com/maskedeken/domain-list-custom/release/geolocation-!cn.txt" >> $GITHUB_ENV
           echo "direct_list=https://raw.githubusercontent.com/maskedeken/domain-list-custom/release/cn.txt" >> $GITHUB_ENV
-          echo "ipnet_list=https://raw.githubusercontent.com/maskedeken/geoip-custom/release/cn.txt" >> $GITHUB_ENV
+          echo "china_ips=https://raw.githubusercontent.com/maskedeken/geoip-custom/release/cn.txt" >> $GITHUB_ENV
+          echo "lan_ips=https://raw.githubusercontent.com/maskedeken/geoip-custom/release/reserved.txt" >> $GITHUB_ENV
         shell: bash
 
       - name: Generate direct.txt file
@@ -43,12 +44,17 @@ jobs:
       - name: Generate cncidr.txt file
         run: |
           echo "payload:" > cncidr.txt
-          curl -sSL ${ipnet_list} | perl -ne '/^(\d{1,3}(\.\d{1,3}){3}\/\d{1,2})/ && print "  - |$1|\n"' | sed "s/|/'/g" >> cncidr.txt
+          curl -sSL ${china_ips} | perl -ne '/^(\d{1,3}(\.\d{1,3}){3}\/\d{1,2})/ && print "  - |$1|\n"' | sed "s/|/'/g" >> cncidr.txt
+
+      - name: Generate lancidr.txt file
+        run: |
+          echo "payload:" > lancidr.txt
+          curl -sSL ${lan_ips} | perl -ne '/^(\d{1,3}(\.\d{1,3}){3}\/\d{1,2})/ && print "  - |$1|\n"' | sed "s/|/'/g" >> lancidr.txt
 
       - name: Move files to publish directory
         run: |
           mkdir -p publish
-          install -p {proxy,direct,reject,cncidr}.txt ./publish/
+          install -p {proxy,direct,reject,cncidr,lancidr}.txt ./publish/
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
