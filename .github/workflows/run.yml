@@ -41,11 +41,6 @@ jobs:
           curl -sSL ${reject_list} | grep -Ev "^(regexp|keyword):" | perl -ne '/^(full:)([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "  - |$2|\n"' | sed "s/|/'/g" >> reject.txt
           curl -sSL ${reject_list} | grep -Ev "^(regexp|keyword|full):" | perl -ne '/^(domain:)?([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "  - |+.$2|\n"' | sed "s/|/'/g" >> reject.txt
 
-      - name: Generate adblock list for dnsmasq
-        run: |
-          curl -sSL ${reject_list} | grep -Ev "^(regexp|keyword):" | perl -ne '/^(full:)([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "address=/$2/\n"' >> adblock.conf
-          curl -sSL ${reject_list} | grep -Ev "^(regexp|keyword|full):" | perl -ne '/^(domain:)?([-_a-zA-Z0-9]+(\.[-_a-zA-Z0-9]+)*)/ && print "address=/$2/\n"' >> adblock.conf
-
       - name: Generate cncidr.txt file
         run: |
           echo "payload:" > cncidr.txt
@@ -60,7 +55,6 @@ jobs:
         run: |
           mkdir -p publish
           install -p {proxy,direct,reject,cncidr,lancidr}.txt ./publish/
-          cp adblock.conf ./publish/
 
       - name: Git push assets to "release" branch
         run: |
