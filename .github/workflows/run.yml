@@ -60,6 +60,7 @@ jobs:
         run: |
           mkdir -p publish
           install -p {proxy,direct,reject,cncidr,lancidr}.txt ./publish/
+          cp adblock.conf ./publish/
 
       - name: Git push assets to "release" branch
         run: |
